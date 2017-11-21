@@ -28,4 +28,69 @@ public class Porra {
         this.options = options;
         this.bets = new ArrayList<>();
     }
+
+    public boolean placeBet(Participant participant, String option, int points) {
+        if(state == State.ACTIVE) {
+            if (options.contains(option)) {
+                if (participant.betPoints(points)) {
+                    Bet bet = new Bet(participant, this, option, points);
+                    bets.add(bet);
+                    participant.getOnHold().add(bet);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if(isOpenQuestion) {
+                options.add(option);
+                if (participant.betPoints(points)) {
+                    Bet bet = new Bet(participant, this, option, points);
+                    bets.add(bet);
+                    participant.getOnHold().add(bet);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public List<Participant> winners() {
+        return null;
+    }
+
+    public List<Participant> losers () {
+        return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public boolean isOpenQuestion() {
+        return isOpenQuestion;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
 }
