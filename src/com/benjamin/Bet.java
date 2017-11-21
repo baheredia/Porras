@@ -12,4 +12,20 @@ public class Bet {
         this.option = option;
         this.bet = bet;
     }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public Porra getPorra() {
+        return porra;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public int getBet() {
+        return bet;
+    }
 }
