@@ -35,17 +35,39 @@ public class Porra {
     }
 
     public boolean placeBet(Participant participant, String option, int points) {
-        // needs to be implemented
-        return false;
+        if(state == State.ACTIVE) {
+            if (options.contains(option)) {
+                if (participant.betPoints(points)) {
+                    Bet bet = new Bet(participant, this, option, points);
+                    bets.add(bet);
+                    participant.getOnHold().add(bet);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if(isOpenQuestion) {
+                options.add(option);
+                if (participant.betPoints(points)) {
+                    Bet bet = new Bet(participant, this, option, points);
+                    bets.add(bet);
+                    participant.getOnHold().add(bet);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public List<Participant> winners() {
-        // needs to be implemented
         return null;
     }
 
-    public List<Participant> losers() {
-        // needs to be implemented
+    public List<Participant> losers () {
         return null;
     }
 
@@ -76,7 +98,7 @@ public class Porra {
     public List<Bet> getBets() {
         return bets;
     }
-
+    
     public void setState(State state) {
         this.state = state;
     }

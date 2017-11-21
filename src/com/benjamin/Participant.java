@@ -22,6 +22,15 @@ public class Participant {
         return (int) score - pointsBetted;
     }
 
+    public boolean betPoints(int points) {
+        if(this.getBettingPoints()>= points) {
+            this.pointsBetted+=points;
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
     public String getName() {
         return name;
