@@ -14,6 +14,7 @@ class PorraTest {
     Participant participant2;
     Porra porra1;
     Porra porra2;
+    Porra passedPorra;
 
     @org.junit.jupiter.api.BeforeEach
     public void setup() {
@@ -27,6 +28,9 @@ class PorraTest {
                 options);
         porra2 = new Porra("ex2", "What?", true,
                 LocalDate.of(2018,Month.APRIL,1),
+                options);
+        passedPorra = new Porra("ex3","What day was yesterday?",
+                false, LocalDate.of(2010,Month.JANUARY,1),
                 options);
     }
 
@@ -89,6 +93,12 @@ class PorraTest {
     public void placeBet_fails_for_not_being_active() {
         porra1.setState(Porra.State.WAITING_RESULT);
         boolean placed = porra1.placeBet(participant1, "yes", 20);
+        assertFalse(placed);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void placeBet_fails_because_it_is_too_late() {
+        boolean placed = passedPorra.placeBet(participant1,"yes",20);
         assertFalse(placed);
     }
 

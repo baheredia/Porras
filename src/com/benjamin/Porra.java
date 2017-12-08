@@ -63,6 +63,10 @@ public class Porra {
         }
     }
 
+    public boolean resolve() {
+        return false;
+    }
+
     public List<Participant> winners() {
         return null;
     }
