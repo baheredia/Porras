@@ -35,32 +35,28 @@ public class Porra {
     }
 
     public boolean placeBet(Participant participant, String option, int points) {
-        if(state == State.ACTIVE) {
-            if (options.contains(option)) {
-                if (participant.betPoints(points)) {
-                    Bet bet = new Bet(participant, this, option, points);
-                    bets.add(bet);
-                    participant.getOnHold().add(bet);
-                    return true;
-                } else {
-                    return false;
+        if (state == State.ACTIVE) {
+            if (resolutionDate.compareTo(LocalDate.now()) >= 0)
+                if (options.contains(option)) {
+                    if (participant.betPoints(points)) {
+                        Bet bet = new Bet(participant, this, option, points);
+                        bets.add(bet);
+                        participant.getOnHold().add(bet);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else if (isOpenQuestion) {
+                    options.add(option);
+                    if (participant.betPoints(points)) {
+                        Bet bet = new Bet(participant, this, option, points);
+                        bets.add(bet);
+                        participant.getOnHold().add(bet);
+                        return true;
+                    }
                 }
-            } else if(isOpenQuestion) {
-                options.add(option);
-                if (participant.betPoints(points)) {
-                    Bet bet = new Bet(participant, this, option, points);
-                    bets.add(bet);
-                    participant.getOnHold().add(bet);
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public boolean resolve() {

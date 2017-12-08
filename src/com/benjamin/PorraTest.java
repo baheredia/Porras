@@ -30,7 +30,7 @@ class PorraTest {
                 LocalDate.of(2018,Month.APRIL,1),
                 options);
         passedPorra = new Porra("ex3","What day was yesterday?",
-                false, LocalDate.of(2010,Month.JANUARY,1),
+                false, LocalDate.of(2017,Month.DECEMBER,7),
                 options);
     }
 
