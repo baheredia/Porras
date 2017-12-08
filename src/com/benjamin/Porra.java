@@ -36,6 +36,9 @@ public class Porra {
 
     public boolean placeBet(Participant participant, String option, int points) {
         if (state == State.ACTIVE) {
+            // If the resolution date is in the future
+            // try to place the bet, otherwise it changes
+            // status to WAITING_RESULT
             if (resolutionDate.compareTo(LocalDate.now()) >= 0) {
                 if (options.contains(option)) {
                     if (participant.betPoints(points)) {
@@ -63,6 +66,22 @@ public class Porra {
     }
 
     public boolean resolve(String result) {
+        if (state==State.WAITING_RESULT) {
+            if (options.contains(result) || isOpenQuestion) {
+                this.result = result;
+                state = State.RESOLVED;
+                return true;
+            }
+        } else {
+            if (state == State.ACTIVE) {
+                // If the state is ACTIVE but the resolution date is passed
+                // change the status to WAITING_RESULT and try again
+                if(resolutionDate.compareTo(LocalDate.now())<0) {
+                    state = State.WAITING_RESULT;
+                    return this.resolve(result);
+                }
+            }
+        }
         return false;
     }
 
