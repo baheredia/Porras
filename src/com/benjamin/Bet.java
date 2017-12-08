@@ -28,4 +28,9 @@ public class Bet {
     public int getBet() {
         return bet;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }
