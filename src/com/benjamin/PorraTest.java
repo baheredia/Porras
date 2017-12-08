@@ -62,6 +62,18 @@ class PorraTest {
     }
 
     @org.junit.jupiter.api.Test
+    public void placeBet_works_extending_options() {
+        boolean placed = porra2.placeBet(participant2, "do",100);
+        assertTrue(placed);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void placeBet_works_and_Expand_options() {
+        porra2.placeBet(participant2, "do", 100);
+        assertEquals(3,porra2.getOptions().size());
+    }
+
+    @org.junit.jupiter.api.Test
     public void placeBet_fails_for_not_enough_points() {
         boolean placed = porra1.placeBet(participant1,"yes",220);
         assertFalse(placed);
