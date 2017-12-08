@@ -98,7 +98,7 @@ public class Porra {
     public List<Bet> getBets() {
         return bets;
     }
-    
+
     public void setState(State state) {
         this.state = state;
     }
