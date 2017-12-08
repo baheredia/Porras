@@ -102,5 +102,45 @@ class PorraTest {
         assertFalse(placed);
     }
 
+    @org.junit.jupiter.api.Test
+    public void placeBet_change_toWaiting_if_it_is_too_late() {
+        passedPorra.placeBet(participant1, "yes", 20);
+        assertEquals(Porra.State.WAITING_RESULT, passedPorra.getState());
+    }
+
+    ///////////////////////////////////////
+    // Tests for the resolve method
+    //////////////////////////////////////
+
+    @org.junit.jupiter.api.Test
+    public void failToResolveForAlreadyResolved() {
+        passedPorra.setState(Porra.State.RESOLVED);
+        boolean resolved = passedPorra.resolve("yes");
+        assertFalse(resolved,"Resolved twice");
+    }
+
+    @org.junit.jupiter.api.Test
+    public void failToResolveBecuaseTooSoon() {
+        boolean resolved = porra1.resolve("yes");
+        assertFalse(resolved,"Resolved before the date");
+    }
+
+    @org.junit.jupiter.api.Test
+    public void resolveNicelly() {
+        boolean resolved = passedPorra.resolve("yes");
+        assertTrue(resolved, "Not resolved a nice porra");
+    }
+
+    @org.junit.jupiter.api.Test
+    public void resolveNicellyChangeStatus() {
+        passedPorra.resolve("yes");
+        assertEquals(Porra.State.RESOLVED, passedPorra.getState());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void  failToResolveBecauseNotOption () {
+        boolean resolved = passedPorra.resolve("cold");
+        assertFalse(resolved, "Resolved but it was not an option");
+    }
 
 }

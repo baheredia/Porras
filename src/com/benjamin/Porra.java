@@ -36,7 +36,7 @@ public class Porra {
 
     public boolean placeBet(Participant participant, String option, int points) {
         if (state == State.ACTIVE) {
-            if (resolutionDate.compareTo(LocalDate.now()) >= 0)
+            if (resolutionDate.compareTo(LocalDate.now()) >= 0) {
                 if (options.contains(option)) {
                     if (participant.betPoints(points)) {
                         Bet bet = new Bet(participant, this, option, points);
@@ -55,11 +55,14 @@ public class Porra {
                         return true;
                     }
                 }
+            } else {
+                state = State.WAITING_RESULT;
+            }
         }
         return false;
     }
 
-    public boolean resolve() {
+    public boolean resolve(String result) {
         return false;
     }
 
@@ -101,5 +104,10 @@ public class Porra {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    // For debuggin pourposes
+    void setResolutionDate(LocalDate newDate) {
+        this.resolutionDate = newDate;
     }
 }
