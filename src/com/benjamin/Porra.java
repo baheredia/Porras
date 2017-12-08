@@ -28,4 +28,34 @@ public class Porra {
         this.options = options;
         this.bets = new ArrayList<>();
     }
+
+    
+
+    public String getName() {
+        return name;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public boolean isOpenQuestion() {
+        return isOpenQuestion;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
 }
