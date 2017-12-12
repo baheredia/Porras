@@ -2,7 +2,6 @@ package com.benjamin;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Porra {
@@ -18,18 +17,18 @@ public class Porra {
     private String question;
     private boolean isOpenQuestion; // False if the list of options is final
     private List<String> options;
-    private LocalDate resolutionDate;
+    private LocalDate lastBettingDate;
     private String result;
 
     private List<Bet> bets;
 
     public Porra(String name, String question, boolean isOpenQuestion,
-                 LocalDate resolutionDate, List<String> options) {
+                 LocalDate lastBettingDate, List<String> options) {
         this.name = name;
         this.state = State.ACTIVE;
         this.question = question;
         this.isOpenQuestion = isOpenQuestion;
-        this.resolutionDate = resolutionDate;
+        this.lastBettingDate = lastBettingDate;
         this.options = options;
         this.bets = new ArrayList<>();
     }
@@ -39,10 +38,10 @@ public class Porra {
             // If the resolution date is in the future
             // try to place the bet, otherwise it changes
             // status to WAITING_RESULT
-            if (resolutionDate.compareTo(LocalDate.now()) >= 0) {
+            if (lastBettingDate.compareTo(LocalDate.now()) >= 0) {
                 if (options.contains(option)) {
                     if (participant.betPoints(points)) {
-                        Bet bet = new Bet(participant, this, option, points);
+                        Bet bet = new Bet(participant, this.name, option, points);
                         bets.add(bet);
                         participant.getOnHold().add(bet);
                         return true;
@@ -52,7 +51,7 @@ public class Porra {
                 } else if (isOpenQuestion) {
                     options.add(option);
                     if (participant.betPoints(points)) {
-                        Bet bet = new Bet(participant, this, option, points);
+                        Bet bet = new Bet(participant, this.name, option, points);
                         bets.add(bet);
                         participant.getOnHold().add(bet);
                         return true;
@@ -76,7 +75,7 @@ public class Porra {
             if (state == State.ACTIVE) {
                 // If the state is ACTIVE but the resolution date is passed
                 // change the status to WAITING_RESULT and try again
-                if(resolutionDate.compareTo(LocalDate.now())<0) {
+                if(lastBettingDate.compareTo(LocalDate.now())<0) {
                     state = State.WAITING_RESULT;
                     return this.resolve(result);
                 }
@@ -126,7 +125,7 @@ public class Porra {
     }
 
     // For debuggin pourposes
-    void setResolutionDate(LocalDate newDate) {
-        this.resolutionDate = newDate;
+    void setLastBettingDate(LocalDate newDate) {
+        this.lastBettingDate = newDate;
     }
 }

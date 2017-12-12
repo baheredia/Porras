@@ -2,13 +2,13 @@ package com.benjamin;
 
 public class Bet {
     private Participant participant;
-    private Porra porra;
+    private String porraName;
     private String option;
     private int bet;
 
-    public Bet(Participant participant, Porra porra, String option, int bet) {
+    public Bet(Participant participant, String porraName, String option, int bet) {
         this.participant = participant;
-        this.porra = porra;
+        this.porraName = porraName;
         this.option = option;
         this.bet = bet;
     }
@@ -17,8 +17,8 @@ public class Bet {
         return participant;
     }
 
-    public Porra getPorra() {
-        return porra;
+    public String getPorra() {
+        return porraName;
     }
 
     public String getOption() {
