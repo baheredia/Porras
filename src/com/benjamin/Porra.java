@@ -85,8 +85,51 @@ public class Porra {
         return false;
     }
 
-    public void redistribute() {
+    private void redistribute() {
+        List<Bet> winningBets = winningBets();
+        List<Bet> losingBets = losingBets();
 
+        double winningPoints = pointsInBets(winningBets);
+        double losingPoints = pointsInBets(losingBets);
+
+        double pointsWonPerRightBet = losingPoints/winningPoints;
+
+        for(Bet wBet:winningBets) {
+            wBet.getParticipant().resolveBet(wBet,pointsWonPerRightBet);
+        }
+
+        for(Bet lBet:losingBets) {
+            lBet.getParticipant().resolveBet(lBet,-1);
+        }
+
+    }
+
+    private List<Bet> winningBets() {
+        List<Bet> winning = new ArrayList<>();
+        for(Bet bet: bets) {
+            if(bet.getOption().equalsIgnoreCase(this.result)) {
+                winning.add(bet);
+            }
+        }
+        return winning;
+    }
+
+    private List<Bet> losingBets() {
+        List<Bet> losing = new ArrayList<>();
+        for(Bet bet: bets) {
+            if(!bet.getOption().equalsIgnoreCase(this.result)) {
+                losing.add(bet);
+            }
+        }
+        return losing;
+    }
+
+    private int pointsInBets(List<Bet> bets) {
+        int total=0;
+        for(Bet bet: bets) {
+            total+=bet.getBet();
+        }
+        return total;
     }
 
     public List<Participant> winners() {

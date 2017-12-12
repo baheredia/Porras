@@ -32,6 +32,18 @@ public class Participant {
 
     }
 
+    public void resolveBet(Bet bet, double scale) {
+        // scale is a positive number if the bet was won, and
+        // -1 if it was lost
+        // First recover the points
+        this.pointsBetted -= bet.getBet();
+        // Modify the score
+        this.score += bet.getBet()*scale;
+        this.onHold.remove(bet);
+        this.resolved.add(bet);
+
+    }
+
     public String getName() {
         return name;
     }
