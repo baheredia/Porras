@@ -68,6 +68,7 @@ public class Porra {
         if (state==State.WAITING_RESULT) {
             if (options.contains(result) || isOpenQuestion) {
                 this.result = result;
+                redistribute();
                 state = State.RESOLVED;
                 return true;
             }
@@ -82,6 +83,10 @@ public class Porra {
             }
         }
         return false;
+    }
+
+    public void redistribute() {
+
     }
 
     public List<Participant> winners() {
